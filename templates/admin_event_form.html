@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ page_title }} - BCE
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1>{{ page_title }}</h1>
+
+    <form method="POST">
+        <div>
+            <label for="category_id">Category</label>
+
+            <select
+                id="category_id"
+                name="category_id"
+                required
+            >
+                <option value="">Select category</option>
+
+                {% for category in categories %}
+                    <option
+                        value="{{ category.category_id }}"
+                        {% if event and event.category_id == category.category_id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ category.category_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="title">Event title</label>
+
+            <input
+                type="text"
+                id="title"
+                name="title"
+                value="{{ event.title if event else '' }}"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="description">Description</label>
+
+            <textarea
+                id="description"
+                name="description"
+                rows="6"
+                required
+            >{{ event.description if event else '' }}</textarea>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="event_date">Event date</label>
+
+            <input
+                type="date"
+                id="event_date"
+                name="event_date"
+                value="{{ event.event_date if event else '' }}"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="start_time">Start time</label>
+
+            <input
+                type="time"
+                id="start_time"
+                name="start_time"
+                value="{{ event.start_time if event else '' }}"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="venue">Venue</label>
+
+            <input
+                type="text"
+                id="venue"
+                name="venue"
+                value="{{ event.venue if event else '' }}"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="capacity">Capacity</label>
+
+            <input
+                type="number"
+                id="capacity"
+                name="capacity"
+                min="1"
+                value="{{ event.capacity if event else '' }}"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="ticket_price">Ticket price</label>
+
+            <input
+                type="number"
+                id="ticket_price"
+                name="ticket_price"
+                min="0"
+                step="0.01"
+                value="{{ event.ticket_price if event else '' }}"
+                required
+            >
+        </div>
+
+        {% if event %}
+            <br>
+
+            <div>
+                <label for="status">Status</label>
+
+                <select
+                    id="status"
+                    name="status"
+                    required
+                >
+                    <option
+                        value="active"
+                        {% if event.status == 'active' %}
+                            selected
+                        {% endif %}
+                    >
+                        Active
+                    </option>
+
+                    <option
+                        value="cancelled"
+                        {% if event.status == 'cancelled' %}
+                            selected
+                        {% endif %}
+                    >
+                        Cancelled
+                    </option>
+                </select>
+            </div>
+        {% endif %}
+
+        <br><br>
+
+        <button type="submit">
+            Save event
+        </button>
+    </form>
+</main>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register - BCE
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1>Create an Account</h1>
+
+    <form method="POST">
+        <div>
+            <label for="full_name">Full name</label>
+
+            <input
+                type="text"
+                id="full_name"
+                name="full_name"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="email">Email address</label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                required
+            >
+        </div>
+
+        <br>
+
+        <div>
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                minlength="6"
+                required
+            >
+        </div>
+
+        <br>
+
+        <button type="submit">
+            Register
+        </button>
+    </form>
+
+    <p>
+        Already registered?
+        <a href="{{ url_for('login') }}">Log in here</a>
+    </p>
+</main>
+
+{% endblock %}

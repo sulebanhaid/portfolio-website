@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+Attendees - BCE
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1>Bookings and Attendees</h1>
+
+    <section>
+        <h2>{{ event.title }}</h2>
+
+        <p><strong>Date:</strong> {{ event.event_date }}</p>
+        <p><strong>Time:</strong> {{ event.start_time }}</p>
+        <p><strong>Venue:</strong> {{ event.venue }}</p>
+    </section>
+
+    {% if attendees %}
+        {% for attendee in attendees %}
+            <article>
+                <h3>Booking {{ attendee.booking_reference }}</h3>
+
+                <p><strong>Customer:</strong> {{ attendee.customer_name }}</p>
+                <p><strong>Customer email:</strong> {{ attendee.customer_email }}</p>
+                <p><strong>Attendee:</strong> {{ attendee.attendee_name }}</p>
+                <p><strong>Attendee email:</strong> {{ attendee.attendee_email }}</p>
+                <p><strong>Tickets:</strong> {{ attendee.quantity }}</p>
+                <p><strong>Total:</strong> £{{ "%.2f"|format(attendee.total_amount) }}</p>
+                <p><strong>Booking status:</strong> {{ attendee.booking_status }}</p>
+                <p><strong>Payment status:</strong> {{ attendee.payment_status }}</p>
+                <p><strong>Transaction:</strong> {{ attendee.transaction_reference }}</p>
+            </article>
+        {% endfor %}
+    {% else %}
+        <section>
+            <p>No bookings have been made for this event.</p>
+        </section>
+    {% endif %}
+</main>
+
+{% endblock %}

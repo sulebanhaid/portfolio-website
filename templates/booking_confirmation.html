@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+Booking Confirmation - BCE
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1>Booking confirmed</h1>
+
+    <section>
+        <p>
+            Thank you, {{ session.get('full_name') }}.
+            Your booking has been completed.
+        </p>
+
+        <h2>Booking details</h2>
+
+        <p><strong>Booking reference:</strong> {{ booking.booking_reference }}</p>
+        <p><strong>Event:</strong> {{ booking.title }}</p>
+        <p><strong>Date:</strong> {{ booking.event_date }}</p>
+        <p><strong>Time:</strong> {{ booking.start_time }}</p>
+        <p><strong>Venue:</strong> {{ booking.venue }}</p>
+        <p><strong>Ticket quantity:</strong> {{ booking.quantity }}</p>
+        <p><strong>Price per ticket:</strong> £{{ "%.2f"|format(booking.unit_price) }}</p>
+        <p><strong>Discount:</strong> £{{ "%.2f"|format(booking.discount_amount) }}</p>
+        <p><strong>Total paid:</strong> £{{ "%.2f"|format(booking.total_amount) }}</p>
+        <p><strong>Booking status:</strong> {{ booking.booking_status }}</p>
+
+        <h2>Payment details</h2>
+
+        <p><strong>Payment method:</strong> {{ booking.payment_method }}</p>
+        <p><strong>Payment status:</strong> {{ booking.payment_status }}</p>
+        <p><strong>Transaction reference:</strong> {{ booking.transaction_reference }}</p>
+
+        <h2>Lead attendee</h2>
+
+        <p><strong>Name:</strong> {{ booking.attendee_name }}</p>
+        <p><strong>Email:</strong> {{ booking.attendee_email }}</p>
+
+        <button onclick="window.print()">
+            Print receipt
+        </button>
+    </section>
+</main>
+
+{% endblock %}

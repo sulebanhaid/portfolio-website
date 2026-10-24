@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+Access Denied - BCE
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <section>
+        <h1>Access denied</h1>
+
+        <p>
+            You do not have permission to open this page.
+        </p>
+
+        <a
+            class="button"
+            href="{{ url_for('home') }}"
+        >
+            Return to homepage
+        </a>
+    </section>
+</main>
+
+{% endblock %}

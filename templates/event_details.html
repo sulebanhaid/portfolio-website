@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ event.title }} - BCE
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <article>
+        <h1>{{ event.title }}</h1>
+
+        <p><strong>Category:</strong> {{ event.category_name }}</p>
+        <p><strong>Date:</strong> {{ event.event_date }}</p>
+        <p><strong>Time:</strong> {{ event.start_time }}</p>
+        <p><strong>Venue:</strong> {{ event.venue }}</p>
+        <p><strong>Price:</strong> £{{ "%.2f"|format(event.ticket_price) }}</p>
+        <p><strong>Tickets remaining:</strong> {{ event.tickets_remaining }}</p>
+
+        <p>{{ event.description }}</p>
+
+        {% if session.get('user_id') %}
+            {% if event.tickets_remaining > 0 %}
+                <a
+                    class="button"
+                    href="{{ url_for('book_event', event_id=event.event_id) }}"
+                >
+                    Book tickets
+                </a>
+            {% else %}
+                <p>This event is sold out.</p>
+            {% endif %}
+        {% else %}
+            <p>
+                <a href="{{ url_for('login') }}">Log in</a>
+                to book tickets.
+            </p>
+        {% endif %}
+    </article>
+</main>
+
+{% endblock %}

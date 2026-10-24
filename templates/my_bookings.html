@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Bookings - BCE
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1>My Bookings</h1>
+
+    {% if bookings %}
+        <div class="events-grid">
+            {% for booking in bookings %}
+                <article class="event-card">
+                    <h2>{{ booking.title }}</h2>
+
+                    <p><strong>Booking reference:</strong> {{ booking.booking_reference }}</p>
+                    <p><strong>Date:</strong> {{ booking.event_date }}</p>
+                    <p><strong>Time:</strong> {{ booking.start_time }}</p>
+                    <p><strong>Venue:</strong> {{ booking.venue }}</p>
+                    <p><strong>Tickets:</strong> {{ booking.quantity }}</p>
+                    <p><strong>Total:</strong> £{{ "%.2f"|format(booking.total_amount) }}</p>
+                    <p><strong>Booking status:</strong> {{ booking.booking_status }}</p>
+                    <p><strong>Payment status:</strong> {{ booking.payment_status }}</p>
+
+                    <a
+                        class="button"
+                        href="{{ url_for(
+                            'booking_confirmation',
+                            booking_id=booking.booking_id
+                        ) }}"
+                    >
+                        View confirmation
+                    </a>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <section>
+            <p>You have not made any bookings yet.</p>
+        </section>
+    {% endif %}
+</main>
+
+{% endblock %}

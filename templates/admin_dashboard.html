@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard - BCE
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <h1>Admin Dashboard</h1>
+
+    <p>
+        <a
+            class="button"
+            href="{{ url_for('admin_create_event') }}"
+        >
+            Create Event
+        </a>
+    </p>
+
+    <div class="summary-grid">
+        <section class="summary-card">
+            <h2>{{ event_summary.total_events }}</h2>
+            <p>Total events</p>
+        </section>
+
+        <section class="summary-card">
+            <h2>{{ booking_summary.total_bookings }}</h2>
+            <p>Total bookings</p>
+        </section>
+
+        <section class="summary-card">
+            <h2>{{ booking_summary.tickets_sold }}</h2>
+            <p>Tickets sold</p>
+        </section>
+
+        <section class="summary-card">
+            <h2>£{{ "%.2f"|format(booking_summary.total_revenue) }}</h2>
+            <p>Total revenue</p>
+        </section>
+    </div>
+
+    <h2>Manage Events</h2>
+
+    {% if events %}
+        {% for event in events %}
+            <article>
+                <h3>{{ event.title }}</h3>
+
+                <p><strong>Category:</strong> {{ event.category_name }}</p>
+                <p><strong>Date:</strong> {{ event.event_date }}</p>
+                <p><strong>Time:</strong> {{ event.start_time }}</p>
+                <p><strong>Venue:</strong> {{ event.venue }}</p>
+                <p><strong>Status:</strong> {{ event.status }}</p>
+                <p><strong>Capacity:</strong> {{ event.capacity }}</p>
+                <p><strong>Tickets sold:</strong> {{ event.tickets_sold }}</p>
+                <p><strong>Remaining:</strong> {{ event.tickets_remaining }}</p>
+                <p><strong>Revenue:</strong> £{{ "%.2f"|format(event.revenue) }}</p>
+
+                <a
+                    class="button"
+                    href="{{ url_for(
+                        'admin_edit_event',
+                        event_id=event.event_id
+                    ) }}"
+                >
+                    Edit
+                </a>
+
+                <a
+                    class="button"
+                    href="{{ url_for(
+                        'admin_attendees',
+                        event_id=event.event_id
+                    ) }}"
+                >
+                    View attendees
+                </a>
+
+                {% if event.status == 'active' %}
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'admin_cancel_event',
+                            event_id=event.event_id
+                        ) }}"
+                    >
+                        <button
+                            class="button-danger"
+                            type="submit"
+                        >
+                            Cancel event
+                        </button>
+                    </form>
+                {% endif %}
+            </article>
+        {% endfor %}
+    {% else %}
+        <section>
+            <p>No events have been created.</p>
+        </section>
+    {% endif %}
+</main>
+
+{% endblock %}
